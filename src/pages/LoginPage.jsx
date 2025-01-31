@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../index.css';
+import loginImage from '../assets/mental-login.jpg'; 
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -25,14 +27,10 @@ const LoginPage = () => {
     setError('');
 
     try {
-      
       const response = await axios.post('http://localhost:8082/api/user/login-user', formData);
-
       if (response.data.success) {
-        
-        navigate('/dashboard');  
+        navigate('/dashboard');
       } else {
-     
         setError('Invalid email or password.');
       }
     } catch (error) {
@@ -43,33 +41,40 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2 className="form-title">Login</h2>
-      {error && <p className="error-message">{error}</p>}
-      <form className="login-form" onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" className="login-button" disabled={loading}>
-          {loading ? 'Logging In...' : 'Login'}
-        </button>
-      </form>
-      <p className="switch-to-signup">
-        Don't have an account? <a href="/signup">Sign Up</a>
-      </p>
+    <div className="auth-container">
+    
+      <div className="auth-form-container">
+        <h2 className="form-title">Login</h2>
+        {error && <p className="error-message">{error}</p>}
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit" className="auth-button" disabled={loading}>
+            {loading ? 'Logging In...' : 'Login'}
+          </button>
+        </form>
+        <p className="switch-auth">
+          Don't have an account? <a href="/signup">Sign Up</a>
+        </p>
+      </div>
+
+      <div className="auth-image-container">
+        <img src={loginImage} alt="Login Illustration" className="auth-image" />
+      </div>
     </div>
   );
 };
